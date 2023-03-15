@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:photo_gallery/app/presentation/photos/pages/home/home_cubit.dart';
+import 'package:photo_gallery/app/presentation/photos/pages/widgets/photo_grid_tile.dart';
 
 import 'home_state.dart';
 
@@ -41,15 +42,27 @@ class _HomePageState extends State<HomePage> {
             if (state is HomeSuccessState) {
               return RefreshIndicator(
                 onRefresh: cubit.getPhotos,
-                child: ListView.builder(
-                    itemCount: state.photos.length,
-                    itemBuilder: (context, index) {
-                      final photo = state.photos.elementAt(index);
-                      return ListTile(
-                        title: Text(photo.url),
-                      );
-                    }),
+                child: GridView.builder(
+                  itemCount: state.photos.length,
+                  gridDelegate:const  SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1,
+                  ),
+                  itemBuilder: (context, index) {
+                    final photo = state.photos.elementAt(index);
+                    final isSelected = state.selectedPhotos.contains(photo.id);
+                    
+                    return PhotoGridTile(
+                      isSelected: isSelected,
+                      photo: photo,
+                      onLongPress: () => cubit.onPhotoLongPress(photo.id),
+                      onTap: () => cubit.onPhotoTap(photo.id),
+                    );
+                  },
+                ),
               );
+
+              
             }
 
             return const Center(child: Text('Wait...'));

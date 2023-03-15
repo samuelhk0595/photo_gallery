@@ -14,6 +14,10 @@ class HomeFailureState extends HomeState {
 
 class HomeSuccessState extends HomeState {
   final List<PhotoEntity> photos;
+  final List<int> selectedPhotos;
 
-  HomeSuccessState(this.photos);
+  HomeSuccessState({
+    required this.photos,
+    this.selectedPhotos = const [],
+  });
 }
