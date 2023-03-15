@@ -4,7 +4,7 @@ import 'package:photo_gallery/app/domain/photo/entities/photo_entity.dart';
 import 'package:photo_gallery/app/domain/photo/repositories/photo_repository.dart';
 
 class GetPhotosUseCase {
-  final JsonPlaceholderRepository repository;
+  final PhotoRepository repository;
 
   GetPhotosUseCase(this.repository);
 
