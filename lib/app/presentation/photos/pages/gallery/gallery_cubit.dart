@@ -4,33 +4,35 @@ import 'package:photo_gallery/app/domain/photo/use_cases/get_photos_use_case.dar
 import 'package:photo_gallery/app/presentation/photos/pages/photo_details/photo_details_page.dart';
 import 'package:photo_gallery/app/presentation/photos/stores/home_store.dart';
 import 'package:photo_gallery/app/routes/app_navigator.dart';
-import 'home_state.dart';
+import 'gallery_state.dart';
 
-class HomeCubit extends Cubit<HomeState> {
-  final GetPhotosUseCase getPhotosUseCase;
+class GalleryCubit extends Cubit<GalleryState> {
+  final GetPhotosUseCase getPhotosFromJsonPlaceHolder;
+  final GetPhotosUseCase getPhotosFromPexels;
   final HomeStore homeStore;
   final AppNaviagator naviagator;
 
-  HomeCubit({
+  GalleryCubit({
     required this.homeStore,
-    required this.getPhotosUseCase,
+    required this.getPhotosFromJsonPlaceHolder,
+    required this.getPhotosFromPexels,
     required this.naviagator,
-  }) : super(HomeIdleState());
+  }) : super(GalleryIdleState());
 
   Future<void> getPhotos() async {
-    emit(HomeLoadingState());
-    final response = await getPhotosUseCase();
+    emit(GalleryLoadingState());
+    final response = await getPhotosFromJsonPlaceHolder();
     response.fold((failure) {
-      emit(HomeFailureState(failure.message));
+      emit(GalleryFailureState(failure.message));
     }, (photos) {
       homeStore.photos = photos;
-      emit(HomeSuccessState(photos: photos));
+      emit(GallerySuccessState(photos: photos));
     });
   }
 
   void selectPhoto(int photoId) {
     homeStore.selectedPhotos.add(photoId);
-    emit(HomeSuccessState(
+    emit(GallerySuccessState(
       photos: homeStore.photos,
       selectedPhotos: homeStore.selectedPhotos,
     ));
@@ -38,7 +40,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   void unselectPhoto(int photoId) {
     homeStore.selectedPhotos.remove(photoId);
-    emit(HomeSuccessState(
+    emit(GallerySuccessState(
       photos: homeStore.photos,
       selectedPhotos: homeStore.selectedPhotos,
     ));
@@ -65,7 +67,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   void clearSelection() {
     homeStore.selectedPhotos.clear();
-    emit(HomeSuccessState(
+    emit(GallerySuccessState(
       photos: homeStore.photos,
       selectedPhotos: homeStore.selectedPhotos,
     ));

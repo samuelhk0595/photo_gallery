@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:photo_gallery/app/presentation/photos/pages/home/home_cubit.dart';
+import 'package:photo_gallery/app/presentation/photos/pages/gallery/gallery_cubit.dart';
 import 'package:photo_gallery/app/presentation/photos/widgets/photo_grid_tile.dart';
 
-import 'home_state.dart';
+import 'gallery_state.dart';
 
-class HomePage extends StatefulWidget {
-  static const String routeName = '/HomePage';
-  const HomePage({super.key});
+class GalleryPage extends StatefulWidget {
+  static const String routeName = '/GalleryPage';
+  const GalleryPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<GalleryPage> createState() => _GalleryPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final cubit = GetIt.I.get<HomeCubit>();
+class _GalleryPageState extends State<GalleryPage> {
+  final cubit = GetIt.I.get<GalleryCubit>();
 
   @override
   void initState() {
@@ -28,11 +28,11 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('Home'),
           actions: [
-            StreamBuilder<HomeState>(
+            StreamBuilder<GalleryState>(
                 stream: cubit.stream,
                 builder: (context, snapshot) {
                   final state = snapshot.data;
-                  if (state is HomeSuccessState && state.selectedPhotos.isNotEmpty) {
+                  if (state is GallerySuccessState && state.selectedPhotos.isNotEmpty) {
                     return TextButton(
                         onPressed: cubit.clearSelection,
                         child: const Text(
@@ -44,20 +44,20 @@ class _HomePageState extends State<HomePage> {
                 }),
           ],
         ),
-        body: StreamBuilder<HomeState>(
+        body: StreamBuilder<GalleryState>(
           stream: cubit.stream,
           builder: (context, snapshot) {
             final state = snapshot.data;
 
-            if (state is HomeLoadingState) {
+            if (state is GalleryLoadingState) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state is HomeFailureState) {
+            if (state is GalleryFailureState) {
               return Center(child: Text(state.message));
             }
 
-            if (state is HomeSuccessState) {
+            if (state is GallerySuccessState) {
               return Stack(
                 children: [
                   RefreshIndicator(
