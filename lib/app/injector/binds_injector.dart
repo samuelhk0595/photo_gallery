@@ -6,6 +6,8 @@ import 'package:photo_gallery/app/domain/photo/use_cases/get_photos_use_case.dar
 import 'package:photo_gallery/app/injector/injector.dart';
 import 'package:photo_gallery/app/presentation/photos/pages/home/home_cubit.dart';
 
+import '../presentation/photos/stores/home_store.dart';
+
 class BindsInjector extends Injector {
   BindsInjector(super.getItInstance);
 
@@ -26,6 +28,11 @@ class BindsInjector extends Injector {
   }
 
   @override
+  void stores(GetIt i) {
+    i.registerSingleton(HomeStore());
+  }
+
+  @override
   void useCases(GetIt i) {
     i.registerFactory(() => GetPhotosUseCase(i.get<PhotoRespositoryImpl>()));
   }
@@ -33,6 +40,6 @@ class BindsInjector extends Injector {
   @override
   void cubits(GetIt i) {
     i.registerFactory(
-        () => HomeCubit(getPhotosUseCase: i.get<GetPhotosUseCase>()));
+        () => HomeCubit(getPhotosUseCase: i.get<GetPhotosUseCase>(),homeStore: i.get<HomeStore>()));
   }
 }
