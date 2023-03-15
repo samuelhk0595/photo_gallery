@@ -35,7 +35,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               title: const Text('Favorites'),
             ),
             body: Builder(builder: (context) {
-              if (photos.isEmpty) return Center(child: Text('You did\'t favorited any photos yet'));
+              if (photos.isEmpty) return const Center(child: Text('You did\'t favorited any photos yet'));
               return ListView.builder(
                   itemCount: photos.length,
                   itemBuilder: (context, index) {

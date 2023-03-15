@@ -22,7 +22,6 @@ class GalleryCubit extends Cubit<GalleryState> {
 
   Future<void> getPhotos() async {
     if (homeStore.photos.isEmpty) emit(GalleryLoadingState());
-    // homeStore.photos.clear();
     homeStore.selectedPhotos.clear();
     final response = homeStore.lookPrettier
         ? await getPhotosFromPexels()
@@ -60,7 +59,6 @@ class GalleryCubit extends Cubit<GalleryState> {
     } else {
       addPhotoToFavorites(photo.id);
     }
-    // naviagator.pushNamed(PhotoDetailsPage.routeName, arguments: [photo]);
   }
 
   void onSwitchChange(bool value) {
