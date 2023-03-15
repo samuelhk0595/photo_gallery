@@ -8,13 +8,23 @@ class PhotoModel extends PhotoEntity {
       required super.url,
       required super.thumbnailUrl});
 
-  factory PhotoModel.fromJson(Map<String, dynamic> json) {
+  factory PhotoModel.fromJsonPlaceHolder(Map<String, dynamic> json) {
     return PhotoModel(
       albumId: json['albumId'],
       id: json['id'],
       title: json['title'],
       url: json['url'],
       thumbnailUrl: json['thumbnailUrl'],
+    );
+  }
+
+  factory PhotoModel.fromPexels(Map<String, dynamic> json) {
+    return PhotoModel(
+      albumId: json['photographer_id'],
+      id: json['id'],
+      title: json['photographer'],
+      url: json['src']['large2x'],
+      thumbnailUrl: json['src']['portrait'],
     );
   }
 

@@ -18,7 +18,7 @@ class JsonPlaceholderDataSource implements PhotoDatasource {
         await dio.get<List>(PhotoConstants.jsonPlaceHolderPhotosEndpoint);
     if (response.statusCode == 200 && response.data != null) {
       return response.data!
-          .map<PhotoEntity>((json) => PhotoModel.fromJson(json))
+          .map<PhotoEntity>((json) => PhotoModel.fromJsonPlaceHolder(json))
           .toList();
     }
     throw CantGetPhotosFailure();
