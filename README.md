@@ -4,7 +4,7 @@
 That's a simple Flutter application using Clean Architecture. <br>
 The application shows photos of the following sources:<br>
 https://jsonplaceholder.typicode.com<br>
-https://api.pexels.com/v1<br>
+https://api.pexels.com/<br>
 
 Packages used in this project:<br>
 
@@ -14,8 +14,6 @@ dio - To make http requests<br>
 get_it - Dependency injection<br>
 awesome_icon - Cool icons <br>
 google_fonts - Beautiful fonts<br>
-
-(app_home.png"Example Gif")
 
 ![App home](app_image_view.png)
 ![App image view](app_home.png)
