@@ -10,7 +10,7 @@ import 'package:photo_gallery/app/presentation/photos/pages/gallery/gallery_cubi
 import 'package:photo_gallery/app/routes/app_navigator.dart';
 
 import '../data/photo/datasources/impl/pexels_datasource.dart';
-import '../presentation/photos/stores/home_store.dart';
+import '../presentation/photos/stores/gallery_store.dart';
 
 class BindsInjector extends Injector {
   BindsInjector(super.getItInstance);
@@ -38,7 +38,7 @@ class BindsInjector extends Injector {
 
   @override
   void stores(GetIt i) {
-    i.registerSingleton(HomeStore());
+    i.registerSingleton(GalleryStore());
   }
 
   @override
@@ -60,11 +60,11 @@ class BindsInjector extends Injector {
               instanceName: PhotoConstants.jsonPlaceHolderInstanceName),
           getPhotosFromPexels: i.get<GetPhotosUseCase>(
               instanceName: PhotoConstants.pexelsInstanceName),
-          homeStore: i.get<HomeStore>(),
+          homeStore: i.get<GalleryStore>(),
           navigator: i.get<AppNavigator>(),
         ));
 
     i.registerFactory(() => FavoritesCubit(
-        homeStore: i.get<HomeStore>(), navigator: i.get<AppNavigator>()));
+        homeStore: i.get<GalleryStore>(), navigator: i.get<AppNavigator>()));
   }
 }

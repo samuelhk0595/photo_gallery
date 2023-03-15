@@ -1,8 +1,7 @@
 import 'package:photo_gallery/app/domain/photo/entities/photo_entity.dart';
 
-class HomeStore {
+class GalleryStore {
   List<PhotoEntity> photos = [];
   final selectedPhotos = <int>[];
-
-  bool get isOnSelectionMode => selectedPhotos.isNotEmpty;
+  bool lookPrettier = false;
 }
