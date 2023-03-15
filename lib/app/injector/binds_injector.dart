@@ -5,6 +5,7 @@ import 'package:photo_gallery/app/data/photo/repositories/photo_repository_impl.
 import 'package:photo_gallery/app/domain/photo/use_cases/get_photos_use_case.dart';
 import 'package:photo_gallery/app/injector/injector.dart';
 import 'package:photo_gallery/app/presentation/photos/pages/home/home_cubit.dart';
+import 'package:photo_gallery/app/routes/app_navigator.dart';
 
 import '../presentation/photos/stores/home_store.dart';
 
@@ -14,6 +15,7 @@ class BindsInjector extends Injector {
   @override
   void core(GetIt i) {
     i.registerFactory(() => Dio());
+    i.registerSingleton(AppNaviagator());
   }
 
   @override
@@ -39,7 +41,10 @@ class BindsInjector extends Injector {
 
   @override
   void cubits(GetIt i) {
-    i.registerFactory(
-        () => HomeCubit(getPhotosUseCase: i.get<GetPhotosUseCase>(),homeStore: i.get<HomeStore>()));
+    i.registerFactory(() => HomeCubit(
+          getPhotosUseCase: i.get<GetPhotosUseCase>(),
+          homeStore: i.get<HomeStore>(),
+          naviagator: i.get<AppNaviagator>(),
+        ));
   }
 }

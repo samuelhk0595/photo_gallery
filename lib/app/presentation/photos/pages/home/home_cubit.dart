@@ -6,10 +6,12 @@ import 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final GetPhotosUseCase getPhotosUseCase;
   final HomeStore homeStore;
+  final AppNaviagator naviagator;
 
   HomeCubit({
     required this.homeStore,
     required this.getPhotosUseCase,
+    required this.naviagator,
   }) : super(HomeIdleState());
 
   Future<void> getPhotos() async {
