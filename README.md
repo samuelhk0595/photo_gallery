@@ -1,16 +1,17 @@
 # photo_gallery
 
-A new Flutter project.
 
-## Getting Started
+That's a simple Flutter application using Clean Architecture. 
+The application shows photos of the following sources:
+https://jsonplaceholder.typicode.com
+https://api.pexels.com/v1
 
-This project is a starting point for a Flutter application.
+Packages used in this project:
 
-A few resources to get you started if this is your first Flutter project:
+flutter_bloc - State management
+dartz - For functional programming
+dio - To make http requests
+get_it - Dependency injection
+awesome_icon - Cool icons 
+google_fonts - Beautiful fonts
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
