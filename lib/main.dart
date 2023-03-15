@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:photo_gallery/app/injector/binds_injector.dart';
 
 void main() {
+  BindsInjector(GetIt.instance).registerAll();
   runApp(const MyApp());
 }
 
