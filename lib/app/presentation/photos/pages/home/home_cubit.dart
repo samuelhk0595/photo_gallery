@@ -52,7 +52,7 @@ class HomeCubit extends Cubit<HomeState> {
         selectPhoto(photo.id);
       }
     } else {
-      naviagator.pushNamed(PhotoDetailsPage.routeName, arguments: photo);
+      naviagator.pushNamed(PhotoDetailsPage.routeName, arguments: [photo]);
     }
   }
 
@@ -69,5 +69,13 @@ class HomeCubit extends Cubit<HomeState> {
       photos: homeStore.photos,
       selectedPhotos: homeStore.selectedPhotos,
     ));
+  }
+
+  void viewAllSelectedPhotos() {
+    List<PhotoEntity> photos = homeStore.photos
+        .where((photo) => homeStore.selectedPhotos.contains(photo.id))
+        .toList();
+
+    naviagator.pushNamed(PhotoDetailsPage.routeName, arguments: photos);
   }
 }

@@ -14,7 +14,7 @@ class AppRouter {
       case PhotoDetailsPage.routeName:
         return MaterialPageRoute(
             builder: (context) => PhotoDetailsPage(
-                  photo: settings.arguments as PhotoEntity,
+                  photos: settings.arguments as List<PhotoEntity>,
                 ));
     }
   }

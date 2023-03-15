@@ -25,7 +25,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Home')),
+        appBar: AppBar(
+          title: const Text('Home'),
+          actions: [
+            StreamBuilder<HomeState>(
+                stream: cubit.stream,
+                builder: (context, snapshot) {
+                  final state = snapshot.data;
+                  if (state is HomeSuccessState && state.selectedPhotos.isNotEmpty) {
+                    return TextButton(
+                        onPressed: cubit.clearSelection,
+                        child: const Text(
+                          'Clear selecion',
+                          style: TextStyle(color: Colors.white),
+                        ));
+                  }
+                  return const SizedBox.shrink();
+                }),
+          ],
+        ),
         body: StreamBuilder<HomeState>(
           stream: cubit.stream,
           builder: (context, snapshot) {
@@ -40,29 +58,59 @@ class _HomePageState extends State<HomePage> {
             }
 
             if (state is HomeSuccessState) {
-              return RefreshIndicator(
-                onRefresh: cubit.getPhotos,
-                child: GridView.builder(
-                  itemCount: state.photos.length,
-                  gridDelegate:const  SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1,
+              return Stack(
+                children: [
+                  RefreshIndicator(
+                    onRefresh: cubit.getPhotos,
+                    child: GridView.builder(
+                      padding: const EdgeInsets.only(bottom: 40),
+                      itemCount: state.photos.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1,
+                      ),
+                      itemBuilder: (context, index) {
+                        final photo = state.photos.elementAt(index);
+                        final isSelected =
+                            state.selectedPhotos.contains(photo.id);
+
+                        return PhotoGridTile(
+                          isSelected: isSelected,
+                          photo: photo,
+                          onLongPress: () => cubit.onPhotoLongPress(photo.id),
+                          onTap: () => cubit.onPhotoTap(photo),
+                        );
+                      },
+                    ),
                   ),
-                  itemBuilder: (context, index) {
-                    final photo = state.photos.elementAt(index);
-                    final isSelected = state.selectedPhotos.contains(photo.id);
-
-                    return PhotoGridTile(
-                      isSelected: isSelected,
-                      photo: photo,
-                      onLongPress: () => cubit.onPhotoLongPress(photo.id),
-                      onTap: () => cubit.onPhotoTap(photo),
-                    );
-                  },
-                ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    left: 0,
+                    child: Offstage(
+                      offstage: state.selectedPhotos.isEmpty,
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        color: Colors.blue,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                                '${state.selectedPhotos.length} selected items'),
+                            TextButton(
+                                onPressed: cubit.viewAllSelectedPhotos,
+                                child: const Text(
+                                  'View all',
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               );
-
-              
             }
 
             return const Center(child: Text('Wait...'));
