@@ -5,6 +5,7 @@ import 'package:photo_gallery/app/data/photo/datasources/impl/json_place_holder_
 import 'package:photo_gallery/app/data/photo/repositories/photo_repository_impl.dart';
 import 'package:photo_gallery/app/domain/photo/use_cases/get_photos_use_case.dart';
 import 'package:photo_gallery/app/injector/injector.dart';
+import 'package:photo_gallery/app/presentation/photos/pages/favorites/favorites_cubit.dart';
 import 'package:photo_gallery/app/presentation/photos/pages/gallery/gallery_cubit.dart';
 import 'package:photo_gallery/app/routes/app_navigator.dart';
 
@@ -17,7 +18,7 @@ class BindsInjector extends Injector {
   @override
   void core(GetIt i) {
     i.registerFactory(() => Dio());
-    i.registerSingleton(AppNaviagator());
+    i.registerSingleton(AppNavigator());
   }
 
   @override
@@ -60,7 +61,10 @@ class BindsInjector extends Injector {
           getPhotosFromPexels: i.get<GetPhotosUseCase>(
               instanceName: PhotoConstants.pexelsInstanceName),
           homeStore: i.get<HomeStore>(),
-          naviagator: i.get<AppNaviagator>(),
+          navigator: i.get<AppNavigator>(),
         ));
+
+    i.registerFactory(() => FavoritesCubit(
+        homeStore: i.get<HomeStore>(), navigator: i.get<AppNavigator>()));
   }
 }
