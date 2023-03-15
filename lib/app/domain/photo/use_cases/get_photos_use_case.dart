@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:photo_gallery/app/core/failure.dart';
-import 'package:photo_gallery/app/domain/json_placeholder/entities/photo_entity.dart';
-import 'package:photo_gallery/app/domain/json_placeholder/repositories/json_placeholder_repository.dart';
+import 'package:photo_gallery/app/domain/photo/entities/photo_entity.dart';
+import 'package:photo_gallery/app/domain/photo/repositories/photo_repository.dart';
 
 class GetPhotosUseCase {
   final JsonPlaceholderRepository repository;
