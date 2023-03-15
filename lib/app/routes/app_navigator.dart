@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppNaviagator {
+class AppNavigator {
   final navigatorKey = GlobalKey<NavigatorState>();
 
   Future<Object?>? pushNamed<T>(

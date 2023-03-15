@@ -15,9 +15,11 @@ class GalleryFailureState extends GalleryState {
 class GallerySuccessState extends GalleryState {
   final List<PhotoEntity> photos;
   final List<int> selectedPhotos;
+  final bool lookPrettier;
 
   GallerySuccessState({
     required this.photos,
     this.selectedPhotos = const [],
+    this.lookPrettier = false,
   });
 }
